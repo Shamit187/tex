@@ -9,3 +9,5 @@
 *.toc
 *.xdv
 *.pdf
+!demo.pdf
+!demo-dark.pdf

@@ -21,6 +21,7 @@
 \usepackage[a4paper, top=1in, bottom=0.6in, left=0.6in, right=0.6in]{geometry}
 \usepackage{fontspec}
 \usepackage{amsmath}
+\usepackage{amsfonts}
 \usepackage{multicol}
 \usepackage{titlesec}
 \usepackage{setspace}
@@ -168,6 +169,7 @@
       colback=lavenderline!15!black,  % darker lavender for dark bg
       colframe=lavenderline,          % border color
       coltitle=black,          % title color
+      coltext=white,
       title=Font Acknowledgment,
       fonttitle=\bfseries\large,
       boxrule=0.6pt,
@@ -180,8 +182,9 @@
       boxsep=5pt,
       breakable
   ]
-  {\color{white}\small
-  \textit{This document uses the ‘Harding’ typeface, designed by Paul Barnes and Christian Schwartz. The font is distributed by Commercial Type and is available at \url{https://commercialtype.com/}. It is included here strictly for educational and non-commercial purposes. No part of this document will be used in professional, commercial, or revenue-generating contexts. The author does not claim any rights over the font and fully acknowledges the intellectual property of its creators.}
+  {
+    \color{white}\small
+    \textit{This document uses the ‘Harding’ typeface, designed by Paul Barnes and Christian Schwartz. The font is distributed by Commercial Type and is available at \url{https://commercialtype.com/}. It is included here strictly for educational and non-commercial purposes. No part of this document will be used in professional, commercial, or revenue-generating contexts. The author does not claim any rights over the font and fully acknowledges the intellectual property of its creators.}
   }
   \end{tcolorbox}
   \balance
