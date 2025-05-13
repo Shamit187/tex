@@ -1,0 +1,180 @@
+\documentclass[9pt, twoside]{extarticle}
+
+% --- Fonts and Encoding ---
+% \usepackage[T1]{fontenc}
+% \usepackage[utf8]{inputenc}
+\usepackage{palatino} 
+% \usepackage{lmodern}
+% \usepackage{microtype}
+\usepackage{fontspec}
+\setmainfont[
+    Path = font/,
+    UprightFont = *-Regular.ttf,
+    ItalicFont = *-Italic.ttf,
+    BoldFont = *-Bold.ttf,
+    BoldItalicFont = *-BoldItalic.ttf,
+]{Harding}
+% \setmainfont{TeX Gyre Schola}
+\usepackage{amsmath}
+% --- Layout ---
+\usepackage[a4paper, top=1in, bottom=0.6in, left=0.6in, right=0.6in]{geometry}
+\usepackage{multicol}
+\setlength{\parskip}{2pt}
+\setlength{\parindent}{0em}
+\usepackage{titlesec}
+\usepackage{setspace}
+\linespread{1}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{fancyhdr}
+\usepackage{datetime}
+% \usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{background}
+\backgroundsetup{contents={}}
+% \usepackage{fontawesome5}
+
+% --- Vertical bar for every page ---
+\AddEverypageHook{%
+  \begin{tikzpicture}[remember picture, overlay]
+    % Start 0.5in from top, match column height
+    \draw[black, line width=1pt]
+      ([xshift=0.48in,yshift=-1cm]current page.north west)
+        --
+      ([xshift=0.48in,yshift=1.5cm]current page.south west);
+  \end{tikzpicture}
+}
+
+% --- Custom Commands for Meta ---
+\newcommand{\titletext}{Global emergence of unprecedented lifetime exposure to climate extremes}
+\newcommand{\abstracttext}{Climate extremes are escalating under anthropogenic climate change. Yet, how this translates into unprecedented cumulative extreme event exposure in a person's lifetime remains unclear. Here we use climate models, impact models and demographic data to project. My understanding is that the unprecedented lifetime exposure to climate extremes (ULE) will increase by 2.5 times by 2100, with 1.5 billion people projected to experience unprecedented heatwaves, droughts, floods and other climate extremes. This study highlights the urgent need for climate action to mitigate these impacts. I will also discuss the implications of these findings for climate policy and adaptation strategies. The paper emphasizes the importance of understanding the cumulative effects of climate extremes on human populations and the need for comprehensive strategies to address these challenges.}
+\newcommand{\topic}{Artificial Intelligence}
+\newcommand{\writtendate}{13 May 2025}
+\newcommand{\doctype}{Article}
+\newcommand{\keywords}{climate change, lifetime risk, global warming, extremes, heatwaves, floods, IPCC}
+
+%   pdfkeywords={climate change, lifetime risk, global warming, extremes, heatwaves, floods, IPCC},
+
+%% DO NOT EDIT THE FOLLOWING LINES
+% --- Header/Footer Setup ---
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[LO]{\textbf{\thepage}\ | \writtendate\ | \topic}  % Odd pages, left corner
+\fancyfoot[RE]{\topic\ | \writtendate\ | \textbf{\thepage}}  % Even pages, right corner
+% \setlength{\footskip}{12pt}
+\fancyhead[LO]{\fontsize{15pt}{24pt}\selectfont\textbf{\doctype}}  % Only show on odd pages (Left header Odd)
+\fancyhead[RE]{}                  % Ensure even pages have no header
+\fancyhead[LE,RO]{}               % No opposite headers
+\setlength{\headheight}{10pt}
+\setlength{\topskip}{-10pt}
+% --- Title Style ---
+\titlespacing*{\section}{0pt}{0.5ex}{0.3ex}
+\titlespacing*{\subsection}{0pt}{0.5ex}{0.3ex}
+
+\usepackage[
+    unicode,
+    pdftitle={\titletext},
+    pdfauthor={Shamit Fatin},
+    pdfsubject={\topic},
+    pdfproducer={XeLaTeX},
+    pdfcreator={Shamit Fatin},
+    pdfkeywords={\keywords},
+]{hyperref}
+
+% --- Begin Document ---
+\begin{document}
+% --- Title and Author Info ---
+{\raggedright \addfontfeature{LetterSpace=-5.0} \fontsize{26pt}{26pt} {\textbf{\titletext}} \\[2em]}
+
+\vspace{1em}
+% --- Meta + Abstract Grid Layout ---
+\rule{\linewidth}{0.4pt} \\[0.4em]
+\noindent
+\begin{minipage}[t]{0.32\textwidth}
+    \raggedright
+    \small
+    \textbf{Topic:} \topic \\
+    \rule{\linewidth}{0.4pt} \\[0.4em]
+    \textbf{Written on:} \writtendate \\
+    \rule{\linewidth}{0.4pt} \\[0.4em]
+    \textbf{Keywords:} \keywords \\
+    \rule{\linewidth}{0.4pt} \\[0.4em]
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.65\textwidth}
+    \raggedright
+    {\small
+    \textbf{Shamit Fatin},\ 
+    \textbf{Kahlert School of Computing, University of Utah} \\
+    \href{mailto:shamit187@gmail.com}{Email}\quad 
+    \href{https://shamit187.github.io}{Homepage}\quad 
+    \href{https://orcid.org/0009-0007-0620-3553}{Orcid}
+  }
+    \rule{\linewidth}{0.4pt} \\
+    \begin{spacing}{1.3}
+        \abstracttext
+    \end{spacing}
+\end{minipage}
+
+\vspace{2em}
+\rule{\textwidth}{0.4pt}
+
+% --- Begin Main Content ---
+\begin{multicols}{2}
+\addfontfeature{LetterSpace=0.0}
+
+
+%% START EDITING FROM HERE
+
+Climate extremes have detrimental effects on society and are a foremost concern around climate change.\footnote{Footnotes can be used if needed.} Anthropogenic influences have been identified in many extreme events, and the IPCC has concluded that climate extremes are increasing in frequency and intensity.\cite{IPCC2021} However, the cumulative exposure to climate extremes over a lifetime is not well understood. This study aims to quantify the unprecedented lifetime exposure to climate extremes (ULE) and its implications for society.
+
+
+\section*{Unprecedented exposure to heatwaves}
+We illustrate what ULE means for extreme heatwaves by using the example of a 1-in-100-year event. We find that the ULE for heatwaves is projected to increase significantly by 2100, with a 2.5 times increase in the number of people exposed to unprecedented heatwaves.\cite{Grant2025} This is particularly concerning as heatwaves have been linked to increased mortality and morbidity rates. But what does this mean for the future? We project that by 2100, 1.5 billion people will be exposed to unprecedented heatwaves, with the highest exposure in regions such as South Asia and sub-Saharan Africa.\cite{Grant2025} This highlights the urgent need for climate action to mitigate these impacts. Also important is the need for adaptation strategies to protect vulnerable populations from the effects of extreme heat. This includes improving infrastructure, increasing access to cooling centers, and implementing early warning systems.\cite{IPCC2021}
+
+\section*{Unprecedented multi-hazard exposure}
+We expand the analysis to all six climate extremes. This is important as many regions are exposed to multiple climate extremes, which can compound the impacts on society. We find that the ULE for multi-hazard exposure is projected to increase significantly by 2100, with a 2.5 times increase in the number of people exposed to unprecedented multi-hazard events.\cite{Grant2025} This is particularly concerning as multi-hazard events can have cascading effects on society, such as increased food and water insecurity, displacement, and health risks.\cite{IPCC2021} But what does this mean for the future? We project that by 2100, 1.5 billion people will be exposed to unprecedented multi-hazard events, with the highest exposure in regions such as South Asia and sub-Saharan Africa.\cite{Grant2025} This highlights the urgent need for climate action to mitigate these impacts. Also important is the need for adaptation strategies to protect vulnerable populations from the effects of multi-hazard events. This includes improving infrastructure, increasing access to cooling centers, and implementing early warning systems.\cite{IPCC2021}
+Here's an equation to illustrate the concept of ULE:
+\begin{equation}
+    ULE = \frac{\text{Number of people exposed to climate extremes}}{\text{Total population}}
+\end{equation}
+
+Here's a partial differential equation of heat, just for fun:
+\begin{equation}
+    \frac{\partial T}{\partial t} = \alpha \nabla^2 T
+\end{equation}
+
+\section*{Implications for climate policy}
+The findings of this study have important implications for climate policy and adaptation strategies. The projected increase in ULE highlights the urgent need for climate action to mitigate these impacts. This includes reducing greenhouse gas emissions, improving infrastructure, and increasing access to cooling centers.\cite{IPCC2021} Additionally, it is important to consider the cumulative effects of climate extremes on human populations and the need for comprehensive strategies to address these challenges. This includes improving infrastructure, increasing access to cooling centers, and implementing early warning systems.\cite{IPCC2021} The findings of this study also highlight the need for further research on the impacts of climate extremes on human populations and the need for comprehensive strategies to address these challenges. This includes improving infrastructure, increasing access to cooling centers, and implementing early warning systems.\cite{IPCC2021} The findings of this study also highlight the need for further research on the impacts of climate extremes on human populations and the need for comprehensive strategies to address these challenges. This includes improving infrastructure, increasing access to cooling centers, and implementing early warning systems.\cite{IPCC2021} The findings of this study also highlight the need for further research on the impacts of climate extremes on human populations and the need for comprehensive strategies to address these challenges. This includes improving infrastructure, increasing access to cooling centers, and implementing early warning systems.\cite{IPCC2021} The findings of this study also highlight the need for further research on the impacts of climate extremes on human populations and the need for comprehensive strategies to address these challenges. This includes improving infrastructure, increasing access to cooling centers, and implementing early warning systems.\cite{IPCC2021} The findings of this study also highlight the need for further research on the impacts of climate extremes on human populations
+and the need for comprehensive strategies to address these challenges. This includes improving infrastructure, increasing access to cooling centers, and implementing early warning systems.\cite{IPCC2021} The findings of this study also highlight the need for further research on the impacts of climate extremes on human populations and the need for comprehensive strategies to address these challenges. This includes improving infrastructure, increasing access to cooling centers, and implementing early warning systems.\cite{IPCC2021} The findings of this study also highlight the need for further research on the impacts of climate extremes on human populations.
+
+\section*{Conclusion}
+In conclusion, this study highlights the urgent need for climate action to mitigate the impacts of climate extremes. The projected increase in ULE underscores the importance of understanding the cumulative effects of climate extremes on human populations and the need for comprehensive strategies to address these challenges. This includes improving infrastructure, increasing access to cooling centers, and implementing early warning systems.\cite{IPCC2021} The findings of this study also highlight the need for further research on the impacts of climate extremes on human populations and the need for comprehensive strategies to address these challenges. This includes improving infrastructure, increasing access to cooling centers, and implementing early warning systems.\cite{IPCC2021} The findings of this study also highlight the need for further research on the impacts of climate extremes on human populations  In conclusion, this study highlights the urgent need for climate action to mitigate the impacts of climate extremes. The projected increase in ULE underscores the importance of understanding the cumulative effects of climate extremes on human populations and the need for comprehensive strategies to address these challenges. This includes improving infrastructure, increasing access to cooling centers, and implementing early warning systems.\cite{IPCC2021} The findings of this study also highlight the need for further research on the impacts of climate extremes on human populations and the need for comprehensive strategies to address these challenges. This includes improving infrastructure, increasing access to cooling centers, and implementing early warning systems.\cite{IPCC2021} The findings of this study also highlight the need for further research on the impacts of climate extremes on human populations  In conclusion, this study highlights the urgent need for climate action to mitigate the impacts of climate extremes. The projected increase in ULE underscores the importance of understanding the cumulative effects of climate extremes on human populations and the need for comprehensive strategies to address these challenges. This includes improving infrastructure, increasing access to cooling centers, and implementing early warning systems.\cite{IPCC2021} The findings of this study also highlight the need for further research on the impacts of climate extremes on human populations and the need for comprehensive strategies to address these challenges. This includes improving infrastructure, increasing access to cooling centers, and implementing early warning systems.\cite{IPCC2021} The findings of this study also highlight the need for further research on the impacts of climate extremes on human populations  In conclusion, this stud
+
+y highlights the urgent need for climate action to mitigate the impacts of climate extremes. The projected increase in ULE underscores the importance of understanding the cumulative effects of climate extremes on human populations and the need for comprehensive strategies to address these challenges. This includes improving infrastructure, increasing access to cooling centers, and implementing early warning systems.\cite{IPCC2021} The findings of this study also highlight the need for further research on the impacts of climate extremes on human populations and the need for comprehensive strategies to address these challenges. This includes improving infrastructure, increasing access to cooling centers, and implementing early warning systems.\cite{IPCC2021} The findings of this study also highlight the need for further research on the impacts of climate extremes on human populations  In conclusion, this study highlights the urgent need for climate action to mitigate the impacts of climate extremes. The projected increase in ULE underscores the importance of understanding the cumulative effects of climate extremes on human populations and the need for comprehensive strategies to address these challenges. This includes improving infrastructure, increasing access to cooling centers, and implementing early warning systems.\cite{IPCC2021} The findings of this study also highlight the need for further research on the impacts of climate extremes on human populations and the need for comprehensive strategies to address these challenges. This includes improving infrastructure, increasing access to cooling centers, and implementing early warning systems.\cite{IPCC2021} The findings of this study also highlight the need for further research on the impacts of climate extremes on human populations  In conclusion, this study highlights the urgent need for climate action to mitigate the impacts of climate extremes. The projected increase in ULE underscores the importance of understanding the cumulative effects of climate extremes on human populations and the need for comprehensive strategies to address these challenges. This includes improving infrastructure, increasing access to cooling centers, and implementing early warning systems.\cite{IPCC2021} The findings of this study also highlight the need for further research on the impacts of climate extremes on human populations and the need for comprehensive strategies to address these challenges. This includes improving infrastructure, increasing access to cooling centers, and implementing early warning systems
+
+.\cite{IPCC2021} The findings of this study also highlight the need for further research on the impacts of climate extremes on human populations  In conclusion, this study highlights the urgent need for climate action to mitigate the impacts of climate extremes. The projected increase in ULE underscores the importance of understanding the cumulative effects of climate extremes on human populations and the need for comprehensive strategies to address these challenges. This includes improving infrastructure, increasing access to cooling centers, and implementing early warning systems.\cite{IPCC2021} The findings of this study also highlight the need for further research on the impacts of climate extremes on human populations and the need for comprehensive strategies to address these challenges. This includes improving infrastructure, increasing access to cooling centers, and implementing early warning systems.\cite{IPCC2021} The findings of this study also highlight the need for further research on the impacts of climate extremes on human populations  In conclusion, this study highlights the urgent need for climate action to mitigate the impacts of climate extremes. The projected increase in ULE underscores the importance of understanding the cumulative effects of climate extremes on human populations and the need for comprehensive strategies to address these challenges. This includes improving infrastructure, increasing access to cooling centers, and implementing early warning systems.\cite{IPCC2021} The findings of this 
+
+study also highlight the need for further research on the impacts of climate extremes on human populations and the need for comprehensive strategies to address these challenges. This includes improving infrastructure, increasing access to cooling centers, and implementing early warning systems.\cite{IPCC2021} The findings of this study also highlight the need for further research on the impacts of climate extremes on human populations  In conclusion, this study highlights the urgent need for climate action to mitigate the impacts of climate extremes. The projected increase in ULE underscores the importance of understanding the cumulative effects of climate extremes on human populations and the need for comprehensive strategies to address these challenges. This includes improving infrastructure, increasing access to cooling centers, and implementing early warning systems.\cite{IPCC2021} The findings of this study also highlight the need for further research on the impacts of climate extremes on human populations and the need for comprehensive strategies to address these challenges. This includes improving infrastructure, increasing access to cooling centers, and implementing early warning systems.\cite{IPCC2021} The findings of this study also highlight the need for further research on the impacts of climate extremes on human populations  In conclusion, this study highlights the urgent need for climate action to mitigate the impacts of climate extremes. The projected increase in ULE underscores the importance of understanding the cumulative effects of climate extremes on human populations and the need for comprehensive strategies to address these challenges. This includes improving infrastructure, increasing access to cooling centers, and implementing early warning systems.\cite{IPCC2021} The findings of this study also highlight the need for further research on the impacts of climate extremes on human populations and the need for comprehensive strategies to address these challenges. This includes improving infrastructure, increasing access to cooling centers, and implementing early warning systems.\cite{IPCC2021} The findings of this study also highlight the need for further research on the impacts of climate extremes on human populations  In conclusion, this study highlights the urgent need for climate action to mitigate the impacts of climate extremes. The projected increase in ULE underscores the importance of understanding the cumulative effects of climate extremes on human populations and the need for comprehensive strategies to address these challenges. This includes improving infrastructure, increasing access to cooling centers, and implementing early warning systems.\cite{IPCC2021} The findings of this study also highlight the need for
+
+further research on the impacts of climate extremes on human populations and the need for comprehensive strategies to address these challenges. This includes improving infrastructure, increasing access to cooling centers, and implementing early warning systems.\cite{IPCC2021} The findings of this study also highlight the need for further research on the impacts of climate extremes on human populations  In conclusion, this study highlights the urgent need for climate action to mitigate the impacts of climate extremes. The projected increase in ULE underscores the importance of understanding the cumulative effects of climate extremes on human populations and the need for comprehensive strategies to address these challenges. This includes improving infrastructure, increasing access to cooling centers, and implementing early warning systems.\cite{IPCC2021} The findings of this study also highlight the need for further research on the impacts of climate extremes on human populations and the need for comprehensive strategies to address these challenges. This includes improving infrastructure, increasing access to cooling centers, and implementing early warning systems.\cite{IPCC2021} The findings of this study also highlight the need for further research on the impacts of climate extremes on human populations  
+\end{multicols}
+
+% --- Mandatory Acknowledgements for Font---
+\vspace{1em}
+\rule{\textwidth}{0.4pt}
+\vspace{0.5em}
+
+\noindent
+\textit{This document uses the 'Harding' typeface, designed by Paul Barnes and Christian Schwartz. The font is distributed by Commercial Type and is available at \url{https://commercialtype.com/}. It is included here strictly for educational and non-commercial purposes. No part of this document will be used in professional, commercial, or revenue-generating contexts. The author does not claim any rights over the font and fully acknowledges the intellectual property of its creators.}
+
+
+% --- References (Example) ---
+\vspace{1em}
+\rule{\textwidth}{0.4pt}
+
+\bibliographystyle{abbrv}
+\bibliography{references}
+
+\end{document}
