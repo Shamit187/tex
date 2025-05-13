@@ -1,0 +1,173 @@
+%% Made by Shamit Fatin (https://shamit187.github.io/, https://alwaysdumb.com/)
+%% Date: 14-May-2025
+%% Install: apt install texlive texlive-xetex
+%% Tool running order: Xelatex, BibTeX, Xelatex, Xelatex
+%% Command to run: 
+%%% latexmk -synctex=1 -interaction=nonstopmode -file-line-error -xelatex -outdir=%OUTDIR%, %DOC%
+%%% bibtex %DOCFILE%
+%%% latexmk -synctex=1 -interaction=nonstopmode -file-line-error -xelatex -outdir=%OUTDIR%, %DOC%
+%%% latexmk -synctex=1 -interaction=nonstopmode -file-line-error -xelatex -outdir=%OUTDIR%, %DOC%
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{naturecustom}[Custom Nature Publication Latex Style]
+
+\newif\iflightmode
+\lightmodefalse  % default is dark mode
+
+\DeclareOption{lightmode}{\lightmodetrue}
+\ProcessOptions\relax
+
+% --- Essential Packages ---
+\usepackage[a4paper, top=1in, bottom=0.6in, left=0.6in, right=0.6in]{geometry}
+\usepackage{fontspec}
+\usepackage{amsmath}
+\usepackage{multicol}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{fancyhdr}
+\usepackage{datetime}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{background}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{hyperref}
+\backgroundsetup{contents={}}
+
+% --- Font ---
+\ifdefined\fontpath
+\setmainfont[
+    Path = \fontpath,
+    UprightFont = *-Regular.ttf,
+    ItalicFont = *-Italic.ttf,
+    BoldFont = *-Bold.ttf,
+    BoldItalicFont = *-BoldItalic.ttf,
+]{Harding}
+\else
+\setmainfont[
+    Path = ../nature-font/,
+    UprightFont = *-Regular.ttf,
+    ItalicFont = *-Italic.ttf,
+    BoldFont = *-Bold.ttf,
+    BoldItalicFont = *-BoldItalic.ttf,
+]{Harding}
+\fi
+
+% --- Colors ---
+\iflightmode
+  % Light mode colors
+  \pagecolor{white}
+  \color{black}
+  \definecolor{linkblue}{HTML}{0B5394}       % dark blue for visibility
+  \definecolor{lavenderline}{HTML}{999999}   % grey-ish divider
+\else
+  % Dark mode colors
+  \pagecolor[rgb]{0.188,0.188,0.188}  % #303030
+  \color[rgb]{1,1,1}                  % white
+  \definecolor{linkblue}{HTML}{6EACDA}
+  \definecolor{lavenderline}{HTML}{EBD3F8}
+\fi
+
+% --- Hyperref Styling ---
+\hypersetup{
+    unicode=true,
+    colorlinks=true,
+    linkcolor=linkblue,
+    urlcolor=linkblue,
+    citecolor=linkblue
+}
+
+% --- Fancyhdr ---
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[LO]{\textbf{\thepage} | \writtendate | \topic}
+\fancyfoot[RE]{\topic | \writtendate | \textbf{\thepage}}
+\fancyhead[LO]{\fontsize{15pt}{24pt}\selectfont\textbf{\doctype}}
+\fancyhead[RE]{\fontsize{10pt}{20pt}\selectfont\titletext}
+\fancyhead[LE,RO]{}
+\setlength{\headheight}{10pt}
+\setlength{\topskip}{-10pt}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{%
+  \hbox to\headwidth{%
+    \color{lavenderline}\leaders\hrule height \headrulewidth\hfill}}
+
+% --- Title Formatting ---
+\titlespacing*{\section}{0pt}{0.5ex}{0.3ex}
+\titlespacing*{\subsection}{0pt}{0.5ex}{0.3ex}
+
+% --- Custom Rules ---
+\newcommand{\lavrule}{\textcolor{lavenderline}{\rule{\linewidth}{0.4pt}}}
+\newcommand{\lavrulemax}{\textcolor{lavenderline}{\rule{\textwidth}{0.4pt}}}
+
+% --- Vertical bar on every page ---
+\AddEverypageHook{%
+  \begin{tikzpicture}[remember picture, overlay]
+    \draw[lavenderline, line width=1pt]
+      ([xshift=0.48in,yshift=-1cm]current page.north west)
+        --
+      ([xshift=0.48in,yshift=1.5cm]current page.south west);
+  \end{tikzpicture}
+}
+
+% --- Default Spacing & Font Features ---
+\setlength{\parskip}{2pt}
+\setlength{\parindent}{0pt}
+\linespread{1}
+
+\newcommand{\titleblock}{
+  {\raggedright \addfontfeature{LetterSpace=-5.0} \fontsize{26pt}{26pt} {\textbf{\titletext}} \\[2em]}
+
+  \vspace{1em}
+  \lavrule
+
+  \noindent
+  \begin{minipage}[t]{0.32\textwidth}
+      \raggedright
+      \small
+      \begin{spacing}{0.8}
+        \textbf{Topic:} \topic \\
+        \lavrule \\ [0.5em]
+        \textbf{Written on:} \writtendate\\
+        \lavrule \\ [0.5em]
+        \textbf{Keywords:} \keywords\\
+        \lavrule \\
+      \end{spacing}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.65\textwidth}
+      \raggedright
+      {\small
+      \textbf{Shamit Fatin},\ 
+      \textbf{Kahlert School of Computing, University of Utah} \\[0.3em]
+      \href{mailto:shamit187@gmail.com}{Email},
+      \href{https://shamit187.github.io}{Homepage}, 
+      \href{https://orcid.org/0009-0007-0620-3553}{Orcid}
+    }
+      \lavrule\\
+      \begin{spacing}{1.3}
+          \abstracttext
+      \end{spacing}
+  \end{minipage}
+
+  \vspace{2em}
+  \lavrulemax
+}
+
+\newenvironment{maintext}{
+  \begin{multicols}{2}
+}{
+  \end{multicols}
+}
+
+\newcommand{\fontacknowledgment}{
+  \lavrulemax
+  \vspace{0.5em}
+
+  \noindent
+  \textit{This document uses the 'Harding' typeface, designed by Paul Barnes and Christian Schwartz. The font is distributed by Commercial Type and is available at \url{https://commercialtype.com/}. It is included here strictly for educational and non-commercial purposes. No part of this document will be used in professional, commercial, or revenue-generating contexts. The author does not claim any rights over the font and fully acknowledges the intellectual property of its creators.}
+
+  \vspace{1em}
+  \lavrulemax
+}
