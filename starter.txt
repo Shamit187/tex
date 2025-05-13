@@ -1,0 +1,30 @@
+\documentclass[9pt, twoside, twocolumn]{extarticle}
+
+%% Important... Define the proper path for font files! and package
+\def\fontpath{../nature-font/}
+\usepackage[]{../naturecustom}
+
+% Please define \titletext, \abstracttext, \topic, \writtendate, \doctype, and \keywords
+\newcommand{\titletext}{Title}
+\newcommand{\abstracttext}{Abstract}
+\newcommand{\topic}{Topic}
+\newcommand{\writtendate}{\today}
+\newcommand{\doctype}{Article}
+\newcommand{\keywords}{Keywords}
+
+% --- Begin Document ---
+\begin{document}
+\titleblock
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%   Your content goes here   %%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% --- Mandatory Acknowledgements for Font---
+\fontacknowledgment
+% --- References (Example) ---
+\bibliographystyle{abbrv}
+\bibliography{references}
+\end{document}
