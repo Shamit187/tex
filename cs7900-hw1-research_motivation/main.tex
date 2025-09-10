@@ -1,0 +1,135 @@
+\documentclass[9pt, twoside, twocolumn]{extarticle}
+
+\def\fontpath{../nature-font/}
+\usepackage[lightmode]{../naturecustom}
+\usepackage{subcaption}
+
+% Please define \titletext, \abstracttext, \topic, \writtendate, \doctype, and \keywords
+\newcommand{\titletext}{Foundations of semantic change summarization}
+\newcommand{\abstracttext}{Datasets evolve, yet most analytics tools summarize a single \emph{snapshot}, leaving analysts to guess why things changed between versions. We propose \emph{semantic change summarization} via \emph{Conditional Transformations (CTs)} which is a compact rules of the form \(\textsf{Condition} \Rightarrow \textsf{Transformation}\) that state \emph{who} changed and \emph{by how much}. A simple utility model will balance accuracy (fit) and interpretability (few, simple rules) to select a small, important set of CTs. We want to develop scalable algorithms that can discover coherent partitions and fit per-partition transformations for two snapshots, with extensions to multiple snapshots. CTs should surface subgroup effects that aggregates miss. It should also point analysts to testable causes.}
+\newcommand{\topic}{Database Management}
+\newcommand{\writtendate}{\today}
+\newcommand{\doctype}{CS7900 (Research Motivation)}
+\newcommand{\keywords}{Database summarization, Database versioning, Interpretable model}
+
+% --- Begin Document ---
+\begin{document}
+% --- Title and Author Info ---
+\titleblock
+
+\section{Problem Motivation}
+
+Data is a core asset in today's world. Across business, medicine, and public policy, organizations collect massive volumes of measurements and store them in database. This has fueled data-driven decision-making, where stakeholder choices are shaped by the evidence available to them in those databases. Because acting on raw rows is impractical, we rely on summaries that compress a database into interpretable views \cite{Chandola_Kumar_2006, Joglekar_Garcia-Molina_Parameswaran_2019,joglekar2017interactive, Sarawagi_2001}. These summary techniques group and aggregate records so people can quickly extract insights. 
+
+But in real life, database changes. Existing tools focus on static snapshots of a database and often leave users to infer why one snapshot differs from the last. Simply comparing summaries across snapshots does not reveal the true intention that produced those differences. It hides which subpopulations shifted and what mapping links ``before'' to ``after.'' Despite active work on data-versioning systems \cite{huang2017orpheusdb} and temporal analytics \cite{Bleifuß_Bornemann_Johnson_Kalashnikov_Naumann_Srivastava_2018, Bornemann_Bleifuß_Kalashnikov_Naumann_Srivastava_2018}, there remains a substantial research gap to create a general, interpretable framework that \emph{generates} concise explanations of how datasets evolve. This work addresses that gap.
+
+% --- Context first ---
+To see why static summaries can mislead, consider the following example, a hospital pilots a new insulin-dosing protocol. To evaluate it, clinicians enroll a small cohort and record blood glucose \emph{before} and \emph{after} the rollout. Table~\ref{tab:snapshots} lists the two snapshots for eight patients.
+
+\begin{table}[h]
+  \centering
+  \begin{subtable}[t]{0.48\columnwidth}
+    \centering
+    \scriptsize
+    \begin{tabular}{lccc}
+      \hline
+      ID & G & Asth. & BG (mg/dL) \\
+      \hline
+      P1 & M & No  & 160 \\
+      P2 & F & No  & 150 \\
+      P3 & M & Yes & 162 \\
+      P4 & F & Yes & 168 \\
+      P5 & M & Yes & 170 \\
+      P6 & F & No  & 158 \\
+      P7 & M & Yes & 142 \\
+      P8 & F & Yes & 160 \\
+      \hline
+    \end{tabular}
+    \caption{Snapshot A (Before)}
+    \label{tab:snapshots-before}
+  \end{subtable}
+  \hfill
+  \begin{subtable}[t]{0.48\columnwidth}
+    \centering
+    \scriptsize
+    \begin{tabular}{lccc}
+      \hline
+      ID & G & Asth. & BG (mg/dL) \\
+      \hline
+      P1 & M & No  & \textbf{140} \\
+      P2 & F & No  & \textbf{130} \\
+      P3 & M & Yes & \textbf{166} \\
+      P4 & F & Yes & \textbf{180} \\
+      P5 & M & Yes & \textbf{180} \\
+      P6 & F & No  & \textbf{138} \\
+      P7 & M & Yes & \textbf{152} \\
+      P8 & F & Yes & \textbf{156} \\
+      \hline
+    \end{tabular}
+    \caption{Snapshot B (After)}
+    \label{tab:snapshots-after}
+  \end{subtable}
+  \caption{Two snapshots of patient glucose before and after the insulin protocol.}
+  \label{tab:snapshots}
+\end{table}
+
+% --- What the summary should surface (without spoiling the mechanism) ---
+A useful change summary should show the subgroup patterns clearly:
+
+\[
+\underbrace{\textsf{Asthma}=\text{No}}_{\text{who}}
+\;\Rightarrow\;
+\underbrace{\textsf{BG}_{\text{after}} \approx \textsf{BG}_{\text{before}} - 20}_{\text{how much}}
+\]
+
+\[
+\underbrace{\textsf{Asthma}=\text{Yes}}_{\text{who}}
+\;\Rightarrow\;
+\underbrace{\textsf{BG}_{\text{after}} \approx \textsf{BG}_{\text{before}} + 8}_{\text{how much}}
+\]
+
+These \emph{conditional transformations (CTs)} \cite{He_Meliou_Fariha_2024} turn one headline (“the mean went down”) into a clear, actionable story: people without asthma improved by about 20\,mg/dL, while people with asthma went up by about 8\,mg/dL. In other words, the trial helped most patients but not this cohort.
+
+% --- From summary to mechanism (hypothesis generation, not a spoiler) ---
+CTs also help us ask \emph{why}. Seeing the asthma group move in the opposite direction naturally prompts a follow-up: what else changed for these patients during the trial? An analyst would check simple auxiliary sources—medication orders, care notes, or policy logs. If many asthma patients also started short steroid courses around the same time, that well-known effect on glucose offers a concrete explanation for the increase. The summary \emph{first} isolates the pattern; the follow-up investigation \emph{then} supplies the cause—without assuming it in advance.
+
+We define \emph{semantic change summarization} as choosing a small set of high-signal CTs that explain how a dataset moved from “before” to “after”. We will score candidate CT sets with a utility function that balances \emph{accuracy} (fit to the data) and \emph{interpretability} (few, simple rules), preferring concise explanations over either coarse global aggregates or long, hard-to-read rule lists.
+
+We plan to make the following contributions:
+\begin{itemize}
+  \item A CT-based \textbf{language} for summarizing dataset evolution that answers \emph{who} changed, \emph{how}, and \emph{by how much} in plain, inspectable terms.
+  \item A \textbf{utility model} that trades off accuracy and simplicity to select a small set of high-value CTs, with a knob to tune the balance.
+  \item \textbf{Scalable algorithms} that discover coherent partitions and fit simple per-partition transformations, with analysis and experiments on large, high-dimensional tables.
+  \item \textbf{Integration points} with database versioning and auditing so semantic explanations appear alongside traditional diffs and aggregates.
+\end{itemize}
+
+\section{Weekly Deep Work Blocks}\label{sec:deep-work}
+Table \ref{sec:deep-work} lists my uninterrupted weekly availability. I'm typically most effective on Thursdays and Fridays, when I implement and test ideas gathered earlier in the week. On other days, I maintain a steady pace, focusing on routine tasks and reading papers.
+
+\begin{table}[h]
+  \centering
+  \small
+  \begin{tabular}{lccc}
+    \hline
+    \textbf{Day} & \textbf{Time} & \textbf{Duration} & \textbf{Mood} \\
+    \hline
+    Monday    & 10:00am--1:00pm & 3h & Normal \\
+    Monday    & 3:00pm--6:00pm  & 3h & Sluggish \\
+    Wednesday & 3:00pm--6:00pm  & 3h & Sluggish \\
+    Thursday  & \textbf{12:00pm--3:00pm} & 3h & Energetic \\
+    Friday    & \textbf{1:00pm--5:00pm}  & 4h & Energetic \\
+    \hline
+  \end{tabular}
+  \caption{Uninterrupted weekly availability and mood.}
+  \label{tab:deep-work}
+\end{table}
+
+
+
+% --- Mandatory Acknowledgements for Font---
+\fontacknowledgment
+% --- References (Example) ---
+\bibliographystyle{abbrv}
+\bibliography{references}
+
+\end{document}
